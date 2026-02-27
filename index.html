@@ -1,0 +1,627 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hormonya | Hormonal Health Education</title>
+    <!-- Google Fonts: Outfit for headings, Inter for body -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+
+    <!-- =============================================
+         AUTH WALL — Blocks entire app until logged in
+         ============================================= -->
+    <div id="authWall" class="auth-wall">
+      <div class="auth-wall-card">
+        <div class="auth-wall-brand">
+          <span class="logo-text">Hormonya.</span>
+          <p>Your hormonal health companion. Sign in to continue.</p>
+        </div>
+
+        <!-- Step 1: Email Address -->
+        <div id="wall-step-1" class="auth-step">
+          <h3>Sign In with Email</h3>
+          <p class="auth-sub">Enter your email to access your personal dashboard.</p>
+          <form id="wallEmailForm">
+            <div class="form-group">
+              <label>Email Address</label>
+              <input type="email" id="wallEmailInput" class="form-input" placeholder="name@example.com" required>
+            </div>
+            <button type="submit" id="wallLoginBtn" class="btn btn-primary" style="width:100%;margin-top:10px;">Continue &rarr;</button>
+          </form>
+        </div>
+
+        <!-- Step 2: OTP Verification REMOVED -->
+
+        <!-- Step 3: New User Profile Setup -->
+        <div id="wall-step-3" class="auth-step" style="display:none;">
+          <h3>Complete Your Profile 👋</h3>
+          <p class="auth-sub">Just a few details to personalize your experience.</p>
+          <form id="wallProfileForm">
+            <div class="form-group">
+              <label>Full Name</label>
+              <input type="text" id="wall-name" class="form-input" placeholder="e.g. Varnika" required>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Age</label>
+                <input type="number" id="wall-age" class="form-input" placeholder="25" min="10" max="100" required>
+              </div>
+              <div class="form-group">
+                <label>Gender</label>
+                <select id="wall-gender" class="form-input" required>
+                  <option value="" disabled selected>Select</option>
+                  <option value="female">Female</option>
+                  <option value="male">Male</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Height (cm)</label>
+                <input type="number" id="wall-height" class="form-input" placeholder="165">
+              </div>
+              <div class="form-group">
+                <label>Weight (kg)</label>
+                <input type="number" id="wall-weight" class="form-input" placeholder="60">
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width:100%;margin-top:10px;">Save & Enter App 🌸</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- END AUTH WALL -->
+
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="container nav-content">
+        <div class="logo">
+          <span class="logo-text">Hormonya.</span>
+        </div>
+        <ul class="nav-links">
+          <li><a href="#home" class="active">Home</a></li>
+          <li><a href="#education">Education</a></li>
+          <li><a href="#tracker">Tracker</a></li>
+        </ul>
+        <div class="nav-actions">
+          <span id="nav-user-greeting" style="display:none; font-weight:600; color:var(--primary-pink-dark); margin-right:10px;"></span>
+          <button class="btn btn-outline" id="signOutBtn" style="display:none;">Sign Out</button>
+          <button class="btn btn-primary login-trigger" id="navLoginBtn">Sign In</button>
+        </div>
+        <div class="mobile-menu-btn">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="home" class="hero">
+      <div class="hero-bg-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+      </div>
+      <div class="container hero-content">
+        <div class="hero-text">
+          <div class="badge fade-in-up">AI-Powered Health Platform</div>
+          <h1 class="fade-in-up delay-1">
+            Understand Your Body,<br />Master Your Hormones.
+          </h1>
+          <p class="fade-in-up delay-2">
+            Your personalized guide to menstrual health, PCOS, thyroid balance,
+            and daily wellness. Track your cycle and get AI-driven insights.
+          </p>
+          <div id="bmi-display-container" class="fade-in-up delay-3" style="display: none; margin-bottom: 20px;">
+            <div class="stat-box" style="display: inline-flex; background: var(--bg-main);">
+              <span class="dot pink"></span> Your BMI: <strong id="bmi-value" style="margin-left: 5px;">--</strong> 
+              <span id="bmi-category" style="margin-left: 8px; font-size: 0.8rem; color: var(--primary-pink); font-weight: bold;"></span>
+            </div>
+          </div>
+          <div class="hero-buttons fade-in-up delay-3">
+            <a href="#tracker" class="btn btn-primary btn-large">Start Tracking</a>
+            <a href="#education" class="btn btn-outline btn-large">Explore Topics</a>
+          </div>
+        </div>
+        <div class="hero-visual fade-in-up delay-4" id="tracker">
+          <!-- Interactive Cycle Tracker Calendar -->
+          <div class="glass-card calendar-card">
+            <div class="calendar-header">
+              <div style="width:100%; text-align:center; margin-bottom:10px;">
+                <p id="realTimeClock" style="font-family:'Inter', sans-serif; color:var(--primary-pink); font-weight:700; font-size:1.1rem; margin:0;"></p>
+              </div>
+              <button id="prevMonth">&lt;</button>
+              <h4 id="monthYear">May 2026</h4>
+              <button id="nextMonth">&gt;</button>
+            </div>
+            <div class="calendar-weekdays">
+              <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+            </div>
+            <div class="calendar-days" id="calendarDays">
+              <!-- JS will populate days here -->
+            </div>
+            <div class="calendar-legend">
+              <span class="legend-item"><span class="dot blood-drop">💧</span> Last Cycle</span>
+              <span class="legend-item"><span class="dot predicted"></span> Predicted</span>
+              <button id="resetCalendar" class="btn btn-outline" style="padding: 4px 10px; font-size: 0.75rem; margin-left: auto;">Reset</button>
+            </div>
+            <p class="calendar-hint">Click a date to mark the start of your cycle.</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Education Topics Section -->
+    <section id="education" class="topics-section">
+      <div class="container">
+        <div class="section-header text-center">
+          <h2>Knowledge is Power</h2>
+          <p>
+            Explore comprehensive guides tailored to your hormonal health
+            journey.
+          </p>
+        </div>
+
+        <div class="grid-cards">
+          <!-- Card 1 -->
+          <div class="topic-card">
+            <div class="card-icon pink-bg">🩸</div>
+            <h3>Menstrual Health</h3>
+            <p>
+              Understand cycle phases, common symptoms, and how to optimize
+              nutrition for every week.
+            </p>
+            <a href="#" class="read-more edu-trigger" data-target="modal-menstrual">Learn more &rarr;</a>
+          </div>
+          <!-- Card 2 -->
+          <div class="topic-card">
+            <div class="card-icon purple-bg">🦋</div>
+            <h3>Thyroid Function</h3>
+            <p>
+              Learn about hypo/hyperthyroidism symptoms, testing, and lifestyle
+              management techniques.
+            </p>
+            <a href="#" class="read-more edu-trigger" data-target="modal-thyroid">Learn more &rarr;</a>
+          </div>
+          <!-- Card 3 -->
+          <div class="topic-card">
+            <div class="card-icon teal-bg">⚖️</div>
+            <h3>PCOS & PCOD</h3>
+            <p>
+              Evidence-based strategies for managing polycystic ovary syndrome
+              through diet and stress relief.
+            </p>
+            <a href="#" class="read-more edu-trigger" data-target="modal-pcos">Learn more &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI Chatbot Floating Button & Window -->
+    <div class="ai-chatbot-container">
+      <div class="chat-window closed" id="chatWindow">
+        <div class="chat-header">
+          <h4>Hormonya AI</h4>
+          <div class="chat-actions">
+            <button id="chat-clear-btn" title="Clear Chat History">🗑️</button>
+            <button class="close-chat" id="closeChat">&times;</button>
+          </div>
+        </div>
+        
+
+        <div class="chat-messages" id="chatMessages">
+          <div class="message bot">
+            <p>
+              Hi there! 👋 I'm your hormonal health assistant. How can I help
+              you today?
+            </p>
+          </div>
+        </div>
+        <div class="chat-input-area">
+          <input type="file" id="chatFileInput" accept="image/*" style="display: none;">
+          <button id="chatAttachBtn" title="Upload Medical Report" style="background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-muted); padding: 0 5px;">📎</button>
+          <input type="text" id="chatInput" placeholder="Ask about PCOS, symptoms, upload a report..." autocomplete="off">
+          <button class="send-btn" id="sendBtn">➤</button>
+        </div>
+      </div>
+      <button class="chat-toggle" id="chatToggle">
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path
+            d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+          ></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Simple Footer -->
+    <footer>
+      <div class="container footer-content">
+        <div class="footer-brand">
+          <span class="logo-text">Hormonya.</span>
+          <p>
+            Empowering women through education and personalized AI tracking.
+          </p>
+        </div>
+        <div class="footer-links">
+          <div>
+            <h4>Platform</h4>
+            <ul>
+              <li><a href="#">Education</a></li>
+              <li><a href="#">Cycle Tracker</a></li>
+              <li><a href="#">AI Insights</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Support</h4>
+            <ul>
+              <li><a href="#">FAQ</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Terms of Service</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom center">
+        <p>&copy; 2026 Hormonya Education Platform. For demo purposes.</p>
+      </div>
+    </footer>
+
+    <!-- Auth Modal (Mobile OTP) -->
+    <div class="modal-overlay" id="authModal">
+      <div class="modal-content glass-card">
+        <button class="close-modal" id="closeAuthModal">&times;</button>
+        
+        <!-- Step 1: Mobile Number -->
+        <div id="auth-step-1">
+          <h3>Welcome Back</h3>
+          <p style="margin-bottom: 20px; font-size: 0.9rem;">Enter your Indian mobile number to sign in.</p>
+          <form id="mobileForm">
+            <div class="form-group">
+              <label for="mobileNumber">Mobile Number</label>
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <span style="background: var(--bg-muted); border: 1px solid var(--border); padding: 10px 14px; border-radius: 10px; font-weight: 600; color: var(--primary-pink-dark); white-space: nowrap;">🇮🇳 +91</span>
+                <input type="tel" id="mobileNumber" placeholder="98765 43210" maxlength="10" pattern="[0-9]{10}" required class="form-input" style="flex:1;">
+              </div>
+              <small style="color:var(--text-muted); margin-top:5px; display:block;">Enter 10-digit mobile number only (without +91)</small>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Send OTP via SMS</button>
+          </form>
+        </div>
+
+        <!-- Step 2: OTP Entry -->
+        <div id="auth-step-2" style="display: none;">
+          <h3>Verify Number</h3>
+          <p style="margin-bottom: 20px; font-size: 0.9rem;">A 4-digit code was sent via SMS to <span id="display-phone" style="font-weight: 600;"></span>. Check your messages!</p>
+          <form id="otpForm">
+            <div class="form-group otp-inputs">
+              <input type="text" class="form-input otp-digit" maxlength="1" pattern="[0-9]" required>
+              <input type="text" class="form-input otp-digit" maxlength="1" pattern="[0-9]" required>
+              <input type="text" class="form-input otp-digit" maxlength="1" pattern="[0-9]" required>
+              <input type="text" class="form-input otp-digit" maxlength="1" pattern="[0-9]" required>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Verify & Sign In</button>
+            <p style="text-align: center; margin-top: 15px; font-size: 0.8rem;">
+              <a href="#" id="resend-otp" style="color: var(--primary-pink); text-decoration: underline;">Resend Code</a>
+            </p>
+          </form>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 1. Menstrual Health Modal -->
+    <div class="modal-overlay" id="modal-menstrual">
+      <div class="modal-content edu-modal-content">
+        <button class="close-modal close-edu-modal">&times;</button>
+        <div class="edu-body">
+
+          <!-- LEFT SIDEBAR HAMBURGER -->
+          <div class="edu-sidebar">
+            <button class="sidebar-toggle" onclick="this.parentElement.classList.toggle('open')">
+              <span></span><span></span>
+            </button>
+            <div class="sidebar-menu">
+              <div class="sidebar-section">
+                <button class="sidebar-section-btn" onclick="this.nextElementSibling.classList.toggle('open')">
+                  🥗 Diet Tips
+                </button>
+                <div class="sidebar-dropdown">
+                  <p><strong>Eat More:</strong></p>
+                  <p>🌿 Dark leafy greens (spinach, kale)</p>
+                  <p>🐟 Fatty fish (salmon, tuna)</p>
+                  <p>🍫 Dark chocolate (magnesium)</p>
+                  <p>🥑 Avocado (healthy fats)</p>
+                  <p>🫐 Berries (antioxidants)</p>
+                  <p><strong>Avoid:</strong></p>
+                  <p>❌ Refined sugar & sweets</p>
+                  <p>❌ Excess caffeine</p>
+                  <p>❌ Salty processed foods</p>
+                </div>
+              </div>
+              <div class="sidebar-section">
+                <button class="sidebar-section-btn" onclick="this.nextElementSibling.classList.toggle('open')">
+                  🏃 Exercises
+                </button>
+                <div class="sidebar-dropdown">
+                  <p><img src='https://img.icons8.com/emoji/20/yoga.png' onerror="this.outerHTML='🧘'" > <strong>Yin Yoga</strong></p>
+                  <p><small>Gentle stretches to relieve cramps</small></p>
+                  <p><img src='https://img.icons8.com/emoji/20/person-walking.png' onerror="this.outerHTML='🚶'" > <strong>Brisk Walking</strong></p>
+                  <p><small>20–30 mins to boost mood</small></p>
+                  <p>🏊 <strong>Swimming</strong></p>
+                  <p><small>Low-impact full body relief</small></p>
+                  <p>💃 <strong>Light Dancing</strong></p>
+                  <p><small>Endorphin boost, reduces PMS</small></p>
+                  <p>🤸 <strong>Pilates</strong></p>
+                  <p><small>Core strength & flexibility</small></p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- MEDIA & VIDEO -->
+          <div class="edu-media">
+            <img src="assets/menstrual.png" alt="Menstrual Health">
+            <div class="video-links-container">
+              <h4>Watch Videos</h4>
+              <div class="language-links">
+                <a href="https://www.youtube.com/results?search_query=menstrual+cycle+health+education+english" target="_blank" class="btn btn-outline btn-sm">English</a>
+                <a href="https://www.youtube.com/results?search_query=menstrual+cycle+health+education+hindi" target="_blank" class="btn btn-outline btn-sm">Hindi</a>
+                <a href="https://www.youtube.com/results?search_query=menstrual+cycle+health+education+telugu" target="_blank" class="btn btn-outline btn-sm">Telugu</a>
+                <a href="https://www.youtube.com/results?search_query=menstrual+cycle+health+education+tamil" target="_blank" class="btn btn-outline btn-sm">Tamil</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- CONTENT -->
+          <div class="edu-text">
+            <h2>Menstrual Health</h2>
+            <div class="edu-section">
+              <h3>Symptoms of Imbalance</h3>
+              <ul>
+                <li>Irregular periods or spotting</li>
+                <li>Severe cramps (Dysmenorrhea)</li>
+                <li>Extreme mood swings (PMDD/PMS)</li>
+                <li>Heavy bleeding or very light flow</li>
+              </ul>
+            </div>
+            <div class="edu-section">
+              <h3>Common Causes</h3>
+              <ul>
+                <li>Chronic stress and poor sleep</li>
+                <li>Hormonal fluctuations (Estrogen/Progesterone)</li>
+                <li>Nutrient deficiencies (Iron, Magnesium)</li>
+              </ul>
+            </div>
+            <div class="edu-section">
+              <h3>🌿 Home Remedies</h3>
+              <div class="remedies-grid">
+                <div class="remedy-card">☕ <strong>Ginger Tea</strong><br><small>Reduces cramps & nausea</small></div>
+                <div class="remedy-card">🌡️ <strong>Heat Therapy</strong><br><small>Heating pad on lower abdomen</small></div>
+                <div class="remedy-card">🌸 <strong>Turmeric Milk</strong><br><small>Anti-inflammatory, every night</small></div>
+                <div class="remedy-card">🍵 <strong>Chamomile Tea</strong><br><small>Calms cramps & anxiety</small></div>
+                <div class="remedy-card">🌱 <strong>Fennel Seeds</strong><br><small>Chew after meals for cramp relief</small></div>
+                <div class="remedy-card">🍋 <strong>Vitamin C Rich Foods</strong><br><small>Regulates hormones naturally</small></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Thyroid Function Modal -->
+    <div class="modal-overlay" id="modal-thyroid">
+      <div class="modal-content edu-modal-content">
+        <button class="close-modal close-edu-modal">&times;</button>
+        <div class="edu-body">
+
+          <!-- LEFT SIDEBAR -->
+          <div class="edu-sidebar">
+            <button class="sidebar-toggle" onclick="this.parentElement.classList.toggle('open')">
+              <span></span><span></span>
+            </button>
+            <div class="sidebar-menu">
+              <div class="sidebar-section">
+                <button class="sidebar-section-btn" onclick="this.nextElementSibling.classList.toggle('open')">
+                  🥗 Diet Tips
+                </button>
+                <div class="sidebar-dropdown">
+                  <p><strong>Eat More:</strong></p>
+                  <p>🥜 Brazil nuts (Selenium)</p>
+                  <p>🐟 Iodine-rich fish (Cod, tuna)</p>
+                  <p>🥚 Eggs (B vitamins + Iodine)</p>
+                  <p>🥩 Lean meats (Zinc)</p>
+                  <p>🫚 Coconut oil (energy metabolism)</p>
+                  <p><strong>Avoid:</strong></p>
+                  <p>❌ Raw cabbage & broccoli</p>
+                  <p>❌ Soy products (excess)</p>
+                  <p>❌ Gluten (if sensitive)</p>
+                </div>
+              </div>
+              <div class="sidebar-section">
+                <button class="sidebar-section-btn" onclick="this.nextElementSibling.classList.toggle('open')">
+                  🏃 Exercises
+                </button>
+                <div class="sidebar-dropdown">
+                  <p>🚶 <strong>Daily Walking</strong></p>
+                  <p><small>30 mins for metabolism boost</small></p>
+                  <p>🧘 <strong>Yoga (Shoulder Stand)</strong></p>
+                  <p><small>Stimulates thyroid gland directly</small></p>
+                  <p>🏋️ <strong>Strength Training</strong></p>
+                  <p><small>2–3x/week to combat fatigue</small></p>
+                  <p>🤸 <strong>Pilates</strong></p>
+                  <p><small>Core & posture, low impact</small></p>
+                  <p>🚴 <strong>Cycling</strong></p>
+                  <p><small>Cardio that's easy on joints</small></p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- MEDIA & VIDEO -->
+          <div class="edu-media">
+            <img src="assets/thyroid.png" alt="Thyroid Health">
+            <div class="video-links-container">
+              <h4>Watch Videos</h4>
+              <div class="language-links">
+                <a href="https://www.youtube.com/results?search_query=thyroid+health+education+english" target="_blank" class="btn btn-outline btn-sm">English</a>
+                <a href="https://www.youtube.com/results?search_query=thyroid+health+education+hindi" target="_blank" class="btn btn-outline btn-sm">Hindi</a>
+                <a href="https://www.youtube.com/results?search_query=thyroid+health+education+telugu" target="_blank" class="btn btn-outline btn-sm">Telugu</a>
+                <a href="https://www.youtube.com/results?search_query=thyroid+health+education+tamil" target="_blank" class="btn btn-outline btn-sm">Tamil</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- CONTENT -->
+          <div class="edu-text">
+            <h2>Thyroid Function</h2>
+            <div class="edu-section">
+              <h3>Symptoms of Imbalance</h3>
+              <ul>
+                <li>Constant fatigue and lethargy</li>
+                <li>Unexplained weight changes (gain or loss)</li>
+                <li>Brain fog and difficulty concentrating</li>
+                <li>Feeling cold constantly (Hypothyroid)</li>
+              </ul>
+            </div>
+            <div class="edu-section">
+              <h3>Common Causes</h3>
+              <ul>
+                <li>Autoimmune conditions (Hashimoto's, Grave's)</li>
+                <li>Nutrient deficiencies (Iodine, Selenium, Zinc)</li>
+                <li>Chronic stress elevating cortisol</li>
+              </ul>
+            </div>
+            <div class="edu-section">
+              <h3>🌿 Home Remedies</h3>
+              <div class="remedies-grid">
+                <div class="remedy-card">🌿 <strong>Ashwagandha</strong><br><small>Balances T3/T4 hormone levels</small></div>
+                <div class="remedy-card">🫚 <strong>Coconut Oil</strong><br><small>1 tbsp daily boosts metabolism</small></div>
+                <div class="remedy-card">🍎 <strong>Apple Cider Vinegar</strong><br><small>Diluted — regulates body pH</small></div>
+                <div class="remedy-card">🌾 <strong>Flaxseeds</strong><br><small>Omega-3s support thyroid function</small></div>
+                <div class="remedy-card">🥬 <strong>Ginger + Lemon Juice</strong><br><small>Each morning, anti-inflammatory</small></div>
+                <div class="remedy-card">🌻 <strong>Evening Primrose Oil</strong><br><small>Supports hormonal balance</small></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. PCOS Modal -->
+    <div class="modal-overlay" id="modal-pcos">
+      <div class="modal-content edu-modal-content">
+        <button class="close-modal close-edu-modal">&times;</button>
+        <div class="edu-body">
+
+          <!-- LEFT SIDEBAR -->
+          <div class="edu-sidebar">
+            <button class="sidebar-toggle" onclick="this.parentElement.classList.toggle('open')">
+              <span></span><span></span>
+            </button>
+            <div class="sidebar-menu">
+              <div class="sidebar-section">
+                <button class="sidebar-section-btn" onclick="this.nextElementSibling.classList.toggle('open')">
+                  🥗 Diet Tips
+                </button>
+                <div class="sidebar-dropdown">
+                  <p><strong>Eat More:</strong></p>
+                  <p>🥦 High-fiber vegetables</p>
+                  <p>🥑 Healthy fats (avocado, olive oil)</p>
+                  <p>🍗 Lean proteins (chicken, fish)</p>
+                  <p>🫐 Low-GI fruits (berries)</p>
+                  <p>🥜 Nuts & seeds (anti-androgen)</p>
+                  <p><strong>Avoid:</strong></p>
+                  <p>❌ White bread & pasta (high GI)</p>
+                  <p>❌ Sugary drinks & sodas</p>
+                  <p>❌ Excess dairy products</p>
+                </div>
+              </div>
+              <div class="sidebar-section">
+                <button class="sidebar-section-btn" onclick="this.nextElementSibling.classList.toggle('open')">
+                  🏃 Exercises
+                </button>
+                <div class="sidebar-dropdown">
+                  <p>🏋️ <strong>Strength Training</strong></p>
+                  <p><small>Reduces insulin resistance</small></p>
+                  <p>🧘 <strong>Yoga (PCOS Flow)</strong></p>
+                  <p><small>Butterfly pose & supta baddha</small></p>
+                  <p>🚴 <strong>Cycling</strong></p>
+                  <p><small>30 mins, 5x/week ideal</small></p>
+                  <p>🏃 <strong>HIIT Training</strong></p>
+                  <p><small>Short bursts, high impact</small></p>
+                  <p>🚶 <strong>Walking After Meals</strong></p>
+                  <p><small>Lowers blood sugar effectively</small></p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- MEDIA & VIDEO -->
+          <div class="edu-media">
+            <img src="assets/pcos.png" alt="PCOS Management">
+            <div class="video-links-container">
+              <h4>Watch Videos</h4>
+              <div class="language-links">
+                <a href="https://www.youtube.com/results?search_query=pcos+pcod+management+english" target="_blank" class="btn btn-outline btn-sm">English</a>
+                <a href="https://www.youtube.com/results?search_query=pcos+pcod+management+hindi" target="_blank" class="btn btn-outline btn-sm">Hindi</a>
+                <a href="https://www.youtube.com/results?search_query=pcos+pcod+management+telugu" target="_blank" class="btn btn-outline btn-sm">Telugu</a>
+                <a href="https://www.youtube.com/results?search_query=pcos+pcod+management+tamil" target="_blank" class="btn btn-outline btn-sm">Tamil</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- CONTENT -->
+          <div class="edu-text">
+            <h2>PCOS &amp; PCOD</h2>
+            <div class="edu-section">
+              <h3>Symptoms of Imbalance</h3>
+              <ul>
+                <li>Irregular or missed cycles</li>
+                <li>Unwanted hair growth (Hirsutism)</li>
+                <li>Stubborn acne and weight gain</li>
+                <li>Difficulty conceiving</li>
+              </ul>
+            </div>
+            <div class="edu-section">
+              <h3>Common Causes</h3>
+              <ul>
+                <li>Insulin resistance (most common driver)</li>
+                <li>Elevated androgens (male hormones)</li>
+                <li>Genetics and lifestyle factors</li>
+              </ul>
+            </div>
+            <div class="edu-section">
+              <h3>🌿 Home Remedies</h3>
+              <div class="remedies-grid">
+                <div class="remedy-card">🍵 <strong>Spearmint Tea</strong><br><small>Reduces testosterone naturally</small></div>
+                <div class="remedy-card">🍂 <strong>Cinnamon Water</strong><br><small>Lowers insulin resistance</small></div>
+                <div class="remedy-card">🌾 <strong>Flaxseeds</strong><br><small>Blocks excess androgens</small></div>
+                <div class="remedy-card">🌿 <strong>Inositol (B8)</strong><br><small>Restores ovulation naturally</small></div>
+                <div class="remedy-card">💛 <strong>Turmeric + Pepper</strong><br><small>Reduces inflammation</small></div>
+                <div class="remedy-card">🌱 <strong>Fenugreek Seeds</strong><br><small>Soaked overnight, regulates glucose</small></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

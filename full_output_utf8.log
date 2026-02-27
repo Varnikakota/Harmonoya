@@ -1,0 +1,89 @@
+﻿[dotenv@17.3.1] injecting env (4) from .env -- tip: ΓÜÖ∩╕Å  write to custom object with { processEnv: myObject }
+node : C:\Users\varni
+\OneDrive\Desktop\Har
+monal health 
+education platform\no
+de_modules\twilio\lib
+\base\BaseTwilio.js:8
+3
+At line:1 char:1
++ node server.js > 
+full_output.log 2>&1 
+; Get-Content 
+full_output.log
++ ~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~
+    + CategoryInfo   
+           : NotSpe  
+  cified: (C:\User   
+ s\varni\...aseTw    
+ilio.js:83:Strin    
+g) [], RemoteExc    
+eption
+    + FullyQualified 
+   ErrorId : Native  
+  CommandError
+ 
+                
+throw new 
+Error("accountSid 
+must start with AC" 
++ apiKeyMsg);
+                ^
+
+Error: accountSid 
+must start with AC
+    at 
+Twilio.setAccountSid 
+(C:\Users\varni\OneDr
+ive\Desktop\Harmonal 
+health education plat
+form\node_modules\twi
+lio\lib\base\BaseTwil
+io.js:83:23)
+    at new Client (C:
+\Users\varni\OneDrive
+\Desktop\Harmonal 
+health education plat
+form\node_modules\twi
+lio\lib\base\BaseTwil
+io.js:45:18)
+    at new Twilio (C:
+\Users\varni\OneDrive
+\Desktop\Harmonal 
+health education plat
+form\node_modules\twi
+lio\lib\rest\Twilio.j
+s:33:9)
+    at TwilioSDK (C:\
+Users\varni\OneDrive\
+Desktop\Harmonal 
+health education plat
+form\node_modules\twi
+lio\lib\index.js:55:1
+2)
+    at 
+Object.<anonymous> (C
+:\Users\varni\OneDriv
+e\Desktop\Harmonal 
+health education plat
+form\server.js:12:7)
+    at 
+Module._compile (node
+:internal/modules/cjs
+/loader:1812:14)
+    at Object..js (no
+de:internal/modules/c
+js/loader:1943:10)
+    at Module.load (n
+ode:internal/modules/
+cjs/loader:1533:32)
+    at Module._load (
+node:internal/modules
+/cjs/loader:1335:12)
+    at 
+wrapModuleLoad (node:
+internal/modules/cjs/
+loader:255:19)
+
+Node.js v24.14.0
